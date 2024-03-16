@@ -1,0 +1,1 @@
+export { default as mcStockVid } from './mcshaderstock.mp4';

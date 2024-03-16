@@ -1,0 +1,18 @@
+const baseUrl = 'http://127.0.0.1:3001/example/v1'
+
+export const getAllModpacks = async () => {
+    try {
+        const res = await fetch(baseUrl,  {
+            method: 'GET',
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch modpacks');
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error('Error fetching modpacks: ', error);
+    }
+};
+

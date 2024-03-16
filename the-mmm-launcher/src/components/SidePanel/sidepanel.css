@@ -1,0 +1,34 @@
+.sidepanel {
+    width: 20%;
+    height: 100%;
+    background: var(--primary-color);
+}
+
+.sidepanel-content {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 6vh;
+}
+
+.sidepanel-content-profile-picture {
+    width: 25vh;
+    height: 25vh;
+}
+
+.sidepanel-content-profile-picture-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidepanel-content-profile-name {
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 20px;
+}

@@ -1,0 +1,95 @@
+.modpack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    width: 85%;
+    padding: 2.5%;
+    height: 76vh;
+    max-height: 80vh;
+    margin-top: 0vh;
+    margin-bottom: -2vh;
+    transition: margin-bottom 0.4s ease-in-out;
+
+    background: var(--primary-color-trans);
+}
+
+.modpack-top-panel {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 25vh;
+    justify-content: space-around;
+}
+
+.modpack-thumbnail-container {
+    width: 36.5vh;
+    height: 25vh;
+}
+
+.modpack-thumbnail {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    object-fit: cover;
+}
+
+.modpack-right-panel {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 5vh;
+    margin-left: 4vw;
+}
+
+.modpack-right-panel-name {
+    font-size: 8vh;
+    font-family: var(--font-family);
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+
+.modpack-right-panel-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4vw;
+}
+
+.modpack-versions-header {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6vh;
+
+    background: var(--accent-color);
+}
+
+.modpack-versions-header-text {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modpack-versions-container {
+    width: 96%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    overflow-y: auto;
+
+    margin-top: 2vh;
+    padding: 2%;
+
+    background: var(--secondary-color);
+}
