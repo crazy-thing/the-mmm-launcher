@@ -8,9 +8,10 @@ namespace TheMMMLauncherCLI.Util
 {
     public class AccountManager
     {
-        private static string minecraftRoot = AppDomain.CurrentDomain.BaseDirectory + "Minecraft";
+        private static string minecraftRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "Minecraft");
+        private static string jsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "userAccounts.json");
+
         private static List<UserAccountModel> accounts;
-        private static string jsonFilePath = "./userAccounts.json"; // dev ./src/userAccounts.json
 
         public static void LoadAccounts()
         {
@@ -29,8 +30,13 @@ namespace TheMMMLauncherCLI.Util
         {
             try
             {
-            string jsonData = JsonSerializer.Serialize(accounts, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(jsonFilePath, jsonData);                
+
+                if (!Directory.Exists(Path.GetDirectoryName(jsonFilePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(jsonFilePath));
+                }
+                string jsonData = JsonSerializer.Serialize(accounts, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(jsonFilePath, jsonData);                
             }
             catch (Exception ex)
             {
@@ -50,6 +56,15 @@ namespace TheMMMLauncherCLI.Util
                 Console.WriteLine(ex);
             }
 
+        }
+
+        public static MSession GetAccount()
+        {
+            if (accounts != null)
+            {
+                return accounts[0].MSession;
+            }
+            return null;
         }
 
         public static void DeleteAccount(string gamerTag)

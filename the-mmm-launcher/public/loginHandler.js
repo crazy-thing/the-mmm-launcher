@@ -1,9 +1,14 @@
 const { Auth } = require('msmc');
 const fs = require('fs');
+const path = require('path');
 
 const getDefaultAccount = () => {
     try {
-        const data = fs.readFileSync("./userAccounts.json", 'utf-8'); // dev ./src/userAccounts.json
+        const appDataPath = process.env.APPDATA;
+        const launcherFolder = path.join(appDataPath, 'The MMM Launcher');
+        const userAccountsPath = path.join(launcherFolder, 'userAccounts.json');
+
+        const data = fs.readFileSync(userAccountsPath, 'utf-8'); // dev ./src/userAccounts.json
         const jsonObject = JSON.parse(data);
         const defaultAccount = jsonObject[0];
         return defaultAccount;

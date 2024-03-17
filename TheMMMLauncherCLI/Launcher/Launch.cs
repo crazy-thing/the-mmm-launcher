@@ -1,5 +1,6 @@
 using CmlLib.Core;
 using TheMMMLauncherCLI.Models;
+using TheMMMLauncherCLI.Util;
 
 namespace TheMMMLauncherCLI.Launcher
 {
@@ -9,21 +10,34 @@ namespace TheMMMLauncherCLI.Launcher
 
         public async void LaunchGame(VersionModel version)
         {
-            Installer installer = new Installer();
-            CMLauncher launcher = installer.InitializeLauncher(version);
-            if (version.modName.ToLower().Contains("fabric"))
+            try
             {
-                fullName = $"fabric-loader-{version.modLoader}-{version.mcVersion}";
-            }
-            else if (version.modName.ToLower().Contains("forge"))
-            {
-                fullName = $"{version.mcVersion}-forge-{version.modLoader}";
-            }
+                Installer installer = new Installer();
+                CMLauncher launcher = installer.InitializeLauncher(version);
+                if (version.modName.ToLower().Contains("fabric"))
+                {
+                    fullName = $"fabric-loader-{version.modLoader}-{version.mcVersion}";
+                }
+                else if (version.modName.ToLower().Contains("forge"))
+                {
+                    fullName = $"{version.mcVersion}-forge-{version.modLoader}";
+                }
 
-            var process = await launcher.CreateProcessAsync(fullName, new MLaunchOption());
-            process.Start();
-            process.WaitForInputIdle();
-            Console.WriteLine("game-launched");
+                var session = AccountManager.GetAccount();
+                var process = await launcher.CreateProcessAsync(fullName, new MLaunchOption 
+                {
+                    MinimumRamMb = 8192,
+                    MaximumRamMb = 10240,
+                    Session = session
+                });
+                process.Start();
+                process.WaitForInputIdle();
+                Console.WriteLine("game-launched");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred launching game: {ex.Message}");
+            }
 
         }
     }

@@ -18,7 +18,7 @@ namespace TheMMMLauncherCLI.Models
 
         public string InstancePath
         {
-            get { return AppDomain.CurrentDomain.BaseDirectory + "Minecraft\\Instances\\" + ParentModpackName + "\\" + name; }
+            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "Minecraft", "Instances", ParentModpackName, name); }
         }
 
     }

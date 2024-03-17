@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1709940306011",
+    "name": "The MMM 3",
+    "description": "This is a test modpack for The MMM Launcher",
+    "versions": [
+      {
+        "name": "23232",
+        "id": "1710629242738",
+        "zip": "logo.zip",
+        "size": "10820678",
+        "mcVersion": "1.20.1",
+        "modLoader": "0.14.21",
+        "modName": "Fabric",
+        "ParentModpackName": "The MMM 3",
+        "InstancePath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\the-mmm-launcher\\build\\backend\\Minecraft\\Instances\\The MMM 3\\23232"
+      }
+    ],
+    "thumbnail": "638306852679515468.gif"
+  }
+]

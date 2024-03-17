@@ -12,7 +12,7 @@ namespace TheMMMLauncherCLI.Launcher
 {
     public class Installer
     {
-        private static string minecraftRoot = AppDomain.CurrentDomain.BaseDirectory + "Minecraft";
+        private static string minecraftRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "Minecraft");
         private MinecraftPath path;
         private CMLauncher launcher;
         public CMLauncher InitializeLauncher(VersionModel version)

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\TheMMMLauncherCLI.csproj": {}
+    "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\TheMMMLauncherCLI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\TheMMMLauncherCLI.csproj": {
+    "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\TheMMMLauncherCLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\TheMMMLauncherCLI.csproj",
+        "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\TheMMMLauncherCLI.csproj",
         "projectName": "TheMMMLauncherCLI",
-        "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\TheMMMLauncherCLI.csproj",
+        "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\TheMMMLauncherCLI.csproj",
         "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\obj\\",
+        "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

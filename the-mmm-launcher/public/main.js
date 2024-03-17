@@ -3,6 +3,7 @@ const { spawn } = require('child_process');
 const path = require('path');
 const { signIn, getDefaultAccount } = require('./loginHandler');
 
+const iconPath = path.join(__dirname, 'logo.ico');
 function createWindow() {
     const win = new BrowserWindow({
         width: 1600,
@@ -10,6 +11,7 @@ function createWindow() {
         minWidth: 1400,
         minHeight: 800,
         autoHideMenuBar: true,
+        icon: iconPath,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -20,8 +22,8 @@ function createWindow() {
     win.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
 
-    console.log(process.cwd());
-    backendProc = spawn(path.join(__dirname, "..\\..\\backend\\TheMMMLauncherCLI.exe"), [], { shell: true });
+    console.log(__dirname);
+    backendProc = spawn(path.join(__dirname, "\\backend\\TheMMMLauncherCLI.exe"));
 
     backendProc.stdout.on('data', (data) => {
         console.log(`C# Backend Process: ${data}`);

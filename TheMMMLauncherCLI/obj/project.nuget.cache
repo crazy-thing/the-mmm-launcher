@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dRDkYbELc8aHH5kzk0oIEsZMr4KqNP+8KSMWqeHUxJ4QJtcygDcONip949NzCsfHx6CNvm4zS+DUcgmRsKK0EQ==",
+  "dgSpecHash": "DqDfxrSbYOKH3zGl8f+WU8GDx1rTBZqpIiPT+fPL+S12y0QyJ28CjAaHJ6UlS9kBylwi3+dHYgnGwt2TLCu6zg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\TheMMMLauncherCLI\\TheMMMLauncherCLI.csproj",
+  "projectFilePath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\themmmlaunchercli\\TheMMMLauncherCLI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\crazy\\.nuget\\packages\\cmllib.core\\3.3.9\\cmllib.core.3.3.9.nupkg.sha512",
     "C:\\Users\\crazy\\.nuget\\packages\\cmllib.core.auth.microsoft\\3.0.2\\cmllib.core.auth.microsoft.3.0.2.nupkg.sha512",

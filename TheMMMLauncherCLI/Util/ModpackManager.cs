@@ -9,10 +9,11 @@ namespace TheMMMLauncherCLI.Util
 {
     public class ModpackManager
     {
-        private static readonly string modpacksDir = AppDomain.CurrentDomain.BaseDirectory + "Minecraft\\Instances\\";
+        private static readonly string modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "Minecraft", "Instances");
+        private static string modpacksJsonFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The MMM Launcher", "modpacks.json");
+
         private static readonly string baseApi = "http://127.0.0.1:3001/example/v1/";
         private static ObservableCollection<ModpackModel> modpacks;
-        private static string modpacksJsonFile = "./modpacks.json"; // dev ./src/modpacks.json
         public bool IsVersionDownloaded(string modpackId)
         {
             string modpackPath = Path.Combine(modpacksDir, modpackId);
@@ -34,7 +35,7 @@ namespace TheMMMLauncherCLI.Util
 
                         string fileName = res.Content.Headers.ContentDisposition.FileName;
                         string version = modpack.versions.FirstOrDefault(ver => ver.id == versionId)?.name;
-                        string instancePath = AppDomain.CurrentDomain.BaseDirectory + $"Minecraft\\Instances\\{modpack.name}\\{version}";
+                        string instancePath = Path.Combine(modpacksDir, modpack.name, version);
                         if (!Directory.Exists(instancePath))
                         {
                             Directory.CreateDirectory(instancePath);
@@ -210,6 +211,11 @@ namespace TheMMMLauncherCLI.Util
         {
             try
             {
+
+            if (!Directory.Exists(Path.GetDirectoryName(modpacksJsonFile)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(modpacksJsonFile));
+            }
             string jsonData = JsonSerializer.Serialize(modpacks, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(modpacksJsonFile, jsonData); 
             }

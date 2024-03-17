@@ -9,7 +9,7 @@ const { ipcRenderer } = window.require('electron');
 const MainPanel = () => {
   const [allModpacks, setAllModpacks] = useState([]);
   const [allInstalledVersions, setAllInstalledVersions] = useState([]);
-  const [selectedModpack, setSelectedModpack] = useState({});
+  const [selectedModpack, setSelectedModpack] = useState(null);
 
 
   useEffect(() => {
@@ -25,7 +25,9 @@ const MainPanel = () => {
   const fetchData = async () => {
     const modpacks = await getAllModpacks();
     setAllModpacks(modpacks);
-    setSelectedModpack(modpacks[0]);
+    if (selectedModpack == null) {
+      setSelectedModpack(modpacks[0]);
+    }
     ipcRenderer.send("get-installed-versions");
     console.log("sending request for installed versions");
   };
