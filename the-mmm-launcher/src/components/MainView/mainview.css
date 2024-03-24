@@ -1,0 +1,109 @@
+.main-view {
+    position: relative;
+    width: 72%;
+    height: 100%;
+    background: transparent;
+}
+
+
+.main-view-background {
+    position: absolute;
+    top: -1%;
+    left: -1%;
+    width: 102%;
+    height: 102%;
+    object-fit: fill; 
+    z-index: -1;
+    filter: blur(.3vw);
+}
+
+.main-view-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    padding: 0 10%;
+    background: var(--primary-color-trans);
+}
+
+.main-view-content-top {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    gap: 10vh;
+    margin-top: 4vh;
+    background: transparent;
+}
+
+.main-view-content-top-thumbnail-container {
+    width: 30vh;
+    height: 30vh;
+}
+
+.main-view-content-top-thumbnail {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    object-fit: fill;
+}
+
+.main-view-content-top-right {
+    width: 62%;
+    height: 30vh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+
+}
+
+.main-view-content-top-right-name {
+    font-size: 8vh;
+    font-family: var(--font-family);
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+  
+
+.main-view-versions-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+    border-bottom: .3vh solid #fff;
+    margin-bottom: 2vh;
+    margin-top: 4vh;
+}
+
+.main-view-versions-header-text {
+    font-size: 3vh;
+    font-weight: bold;
+    font-family: var(--font-family);
+    color: #fff;
+
+    margin: 0;
+    margin-bottom: .7vh;
+}
+
+.main-view-versions-container {
+    width: 90%;
+    height: 100%;
+    padding: 5%;
+
+    gap: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    
+    background: var(--secondary-color-trans);
+}

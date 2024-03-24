@@ -1,0 +1,26 @@
+:root {
+  --primary-color: linear-gradient(324deg, rgba(23,22,22,1) 0%, rgba(74,72,72,1) 100%);
+  --primary-background: #1b1b1b;
+  --primary-color-trans: #2221218e;
+  --secondary-color-trans: #00000080;
+  --secondary-color: #414141;
+  --accent-color: #d9d4d4;
+  --font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+  overflow: hidden;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

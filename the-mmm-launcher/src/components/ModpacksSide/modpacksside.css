@@ -1,0 +1,72 @@
+.modpacks-side {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--primary-background);
+  transition: max-height 0.4s ease-in-out, border-radius 0.4s ease-in-out, margin-bottom 0.4s ease-in-out;
+  z-index: 100;
+}
+
+
+
+.modpacks-side-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 94%;
+}
+
+.modpacks-side-modpack {
+  width: 13vh;
+  height: 13vh;
+  max-height: 13vh;
+  min-height: 13vh;
+  margin: 0;
+  margin-top: 2vh;
+}
+
+.modpacks-side-modpack:first-child {
+  margin-top: 1.5vh;
+}
+
+
+.modpacks-side-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+.modpacks-side-scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 3%;
+  background: var(--secondary-color);
+  cursor: pointer;
+}
+
+.modpacks-side-scroll-btn-down {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid var(--accent-color);
+}
+
+.modpacks-side-scroll-btn-up {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid var(--accent-color);
+}

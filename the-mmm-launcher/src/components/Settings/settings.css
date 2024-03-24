@@ -1,0 +1,54 @@
+.settings {
+    position: absolute;
+    top: 0;
+    right: -18%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 18%;
+    height: 100%;
+
+    transition: right 0.3s ease-in;
+
+    background: var(--primary-background);
+    font-family: var(--font-family);
+    color: #fff;
+}
+
+.settings-body {
+    margin-bottom: 26vh;
+}
+
+.settings-header, .settings-body-header {
+    width: 100%;
+    height: fit-content;
+}
+
+.settings-header {
+    padding: 6% 0;
+    background: var(--secondary-color);
+    margin-bottom: 8vh;
+}
+
+.settings-header-text, .settings-body-header-text {
+    margin: 0;
+    margin-left: 5%;
+}
+
+.settings-header-text {
+    font-size: 1.9vw;
+    font-weight: 600;
+}
+
+.settings-body-header {
+    padding: 6px 0;
+    background: #2e2e2e;
+}
+
+.settings-body-header-text {
+    font-size: 1.1vw;
+}
+
+.settings-back {
+    align-self: center;
+}

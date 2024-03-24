@@ -1,0 +1,45 @@
+.sidepanel {
+    width: 18%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--primary-color);
+}
+
+.sidepanel-content {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 6vh;
+}
+
+.sidepanel-content-profile-picture {
+    width: 25vh;
+    height: 25vh;
+}
+
+.sidepanel-content-profile-picture-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidepanel-content-profile-name {
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 20px;
+}
+
+.sidepanel-setting {
+    align-self: center;
+    margin-bottom: 12vh;
+    cursor: pointer;
+    width: 8vh;
+    height: 8vh;
+}
