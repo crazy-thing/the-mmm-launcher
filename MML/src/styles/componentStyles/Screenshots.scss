@@ -1,0 +1,23 @@
+.screenshots {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    overflow: hidden;
+}
+
+.screenshots-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.screenshots-screenshot {
+    width: 44vh;
+    max-height: 25vh;
+    padding: .3%;
+    height: auto;
+    margin: 0 5px;
+}

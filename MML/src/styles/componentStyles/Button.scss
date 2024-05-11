@@ -1,0 +1,11 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family);
+    cursor: pointer;
+}
+
+.button:hover {
+    filter: brightness(105%);
+}

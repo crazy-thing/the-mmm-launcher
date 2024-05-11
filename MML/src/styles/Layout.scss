@@ -1,0 +1,36 @@
+#root {
+    width: 100vw;
+    height: fit-content;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+    background: transparent;
+    overflow-x: hidden;
+}
+  
+  
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e7e7e7;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f0f0f0;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
