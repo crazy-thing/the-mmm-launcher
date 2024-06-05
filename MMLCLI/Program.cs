@@ -46,7 +46,9 @@ namespace MMLCLI
                         AccountManager.AddAccount(accountModel);
                         break;
                     case "sign-out":
-                        AccountManager.DeleteAccount(arguments[0]);
+                        string signOut = string.Join(" ", arguments);
+                        Console.WriteLine(signOut);
+                        AccountManager.DeleteAccount(signOut);
                         break;
                     case "change-setting":
                         SettingsManager.ChangeSetting(arguments[0], arguments[1]);

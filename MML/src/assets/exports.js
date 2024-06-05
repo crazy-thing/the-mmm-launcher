@@ -8,5 +8,8 @@ export { default as trashIcon} from './trashIcon.svg';
 export { default as backIcon } from './backIcon.png';
 export { default as mml } from './mml.png';
 export { default as carretDown } from './carretDown.svg';
+export { default as globe } from './globe.svg';
+export { default as github } from './github.svg';
+
 
 

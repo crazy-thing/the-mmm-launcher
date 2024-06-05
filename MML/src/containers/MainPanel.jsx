@@ -6,6 +6,7 @@ import ConfirmDelete from '../components/ConfirmDelete';
 import Changelog from '../components/Changelog';
 import Screenshots from '../components/Screenshots';
 import { folderIcon, trashIcon } from '../assets/exports';
+import PreloadImages from '../components/PreloadImages';
 
 const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
 
@@ -45,20 +46,25 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
   };
 
   const handleOverflowCheck = () => {
-    const nameElement = document.querySelector('.main-panel-content-top-right-name');
-    const parentElement = nameElement?.parentElement;
-    if (nameElement && parentElement) {
-      const nameRect = nameElement.getBoundingClientRect();
-      const parentRect = parentElement.getBoundingClientRect();
-      if (nameRect.width === parentRect.width) {
-        setIsOverflowing(true);
-      } else {
-        setIsOverflowing(false);
-        console.log(nameRect.width);
-      }
-    }
-  };
+    const checkElements = () => {
+        const nameElement = document.querySelector('.main-panel-content-top-right-name');
+        const parentElement = nameElement?.parentElement;
+        if (nameElement && parentElement) {
+            const nameRect = nameElement.getBoundingClientRect();
+            const parentRect = parentElement.getBoundingClientRect();
+            if (nameRect.width === parentRect.width) {
+                setIsOverflowing(true);
+            } else {
+                setIsOverflowing(false);
+                console.log(nameRect.width);
+            }
+        } else {
+            setTimeout(checkElements, 10); 
+        }
+    };
 
+    checkElements();
+};
   const handleInstallModpack = (modpack) => {
     setUpdate(false);
     setIsInstalling(true);
@@ -66,8 +72,6 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
     handleSetNoChange(true);
     ipcRenderer.send('download-modpack', JSON.stringify(modpack));
     setSelectedItem("changelog");
-    localStorage.setItem(`lastInstalledVersion${modpack && modpack.id}`, JSON.stringify(modpack.mainVersion));
-
   };
 
   const handleDeleteModpack = () => {
@@ -118,6 +122,8 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
   useEffect(() => {
     
     ipcRenderer.on('install-complete', (event) => {
+      localStorage.setItem(`lastInstalledVersion${modpack && modpack.id}`, JSON.stringify(modpack.mainVersion)); // could cause all modpacks to set one version as installed version
+      setInstalledVersion(modpack.mainVersion);
       setIsInstalling(false);
       setVerInstalling(null);
       handleSetNoChange(false);
@@ -144,7 +150,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
         ipcRenderer.removeAllListeners('game-launched');
         ipcRenderer.removeAllListeners('update-progress');
       };
-    }, []);
+    }, [modpack]);
 
     const renderInfo = () => {
       switch (selectedItem) {
@@ -175,15 +181,16 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
         {showDel && (
           <ConfirmDelete onConfirm={() => handleConfirmed(true)} onCancel={() => handleConfirmed(false)} />
         )}
+        {/*
           {modpack && (
-              <img className='main-panel-background' src={`http://server_ip:port/uploads/${modpack.background}`} />
+              <img className='main-panel-background' src={`https://minecraftmigos.me/uploads/${modpack.background}`} />
           )}
-  
+        */}
           {modpack && (
               <div className='main-panel-content'>
                   <div className='main-panel-content-top'>
                       <div className='main-panel-content-top-thumbnail-container'>
-                          <img className='main-panel-content-top-thumbnail' src={`http://server_ip:port/uploads/${modpack.thumbnail}`} />
+                          <img className='main-panel-content-top-thumbnail' src={`https://minecraftmigos.me/uploads/${modpack.thumbnail}`} />
                       </div>
   
                       <div className='main-panel-content-top-right'>
@@ -250,6 +257,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
                     {selectedItem && (
                       <div className='main-panel-content-rendered-item'>
                         {renderInfo()}
+                        <PreloadImages imageUrls={modpack.screenshots.map(screenshot => screenshot)} />
                       </div>
                     )}
               </div>

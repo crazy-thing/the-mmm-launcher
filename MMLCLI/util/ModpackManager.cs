@@ -10,7 +10,7 @@ namespace MMLCLI.Util
     {
         private static readonly string modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
         private static string modpacksJsonFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "modpacks.json");
-        private static readonly string baseApi = "http://server_ip:port/example/v1/";
+        private static readonly string baseApi = "https://minecraftmigos.me/example/v1/";
         public static ObservableCollection<ModpackModel> modpacks;
         public static bool IsVersionDownloaded(string modpackId)
         {
@@ -51,7 +51,7 @@ namespace MMLCLI.Util
                         existingModpack.mainVersion.modName = "fabric";
                         existingModpack.mainVersion.ParentModpackName = existingModpack.name;
                         SaveModpacks();
-                        await installer.InstallFabricVersion(existingModpack.mainVersion);
+                        await installer.InstallFabricVersion(existingModpack.mainVersion, modpack.id);
                     }
                     else if (forgeLoader != null)
                     {
@@ -63,7 +63,7 @@ namespace MMLCLI.Util
                         existingModpack.mainVersion.modName = "forge";
                         existingModpack.mainVersion.ParentModpackName = existingModpack.name;
                         SaveModpacks();
-                        await installer.InstallForgeVersion(existingModpack.mainVersion);
+                        await installer.InstallForgeVersion(existingModpack.mainVersion, modpack.id);
                     }
                     else
                     {

@@ -4,13 +4,13 @@ import { settingIcon } from '../assets/exports';
 import Button from '../components/Button';
 import Modpacks from '../components/Modpacks';
 
-const SidePanel = ({ changeSettingPos, handleSelectModpack, modpacks }) => {
+const SidePanel = ({ pos, changeSettingPos, handleSelectModpack, modpacks }) => {
     const { ipcRenderer } = window.require('electron');
 
     const [ profile, setProfile ] = useState(null);
 
     const getDefaultAccount = () => {
-        ipcRenderer.send('get-default-account');
+        ipcRenderer.send('sign-in');
       };
     
     const handleSignIn = async () => {
@@ -44,7 +44,7 @@ const SidePanel = ({ changeSettingPos, handleSelectModpack, modpacks }) => {
       }, []);
 
   return (
-    <div className='side-panel'>
+    <div className='side-panel' style={{right: pos}} >
 
       <img className='side-panel-setting' src={settingIcon} onClick={() => changeSettingPos("0")} />
 

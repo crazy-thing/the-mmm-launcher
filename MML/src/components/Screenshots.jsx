@@ -12,7 +12,7 @@ const Screenshots = ({ screenshots }) => {
                         <img
                             key={`screenshot-${i}-${index}`}
                             className='screenshots-screenshot'
-                            src={`http://server_ip:port/uploads/${screenshot}`}
+                            src={`https://minecraftmigos.me/uploads/${screenshot}`}
                             alt={`Screenshot ${i + index}`}
                         />
                     ))}

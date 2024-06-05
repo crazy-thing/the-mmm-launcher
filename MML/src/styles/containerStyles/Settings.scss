@@ -10,7 +10,7 @@
 
     transition: right 0.3s ease-in;
 
-    background: var(--primary-background);
+    background: var(--primary-color);
     font-family: var(--font-family-secondary);
     color: #fff;
 }
@@ -59,17 +59,18 @@
 
 .settings-mml {
     position: relative;
-    top: 16%;
-    left: 5%;
+    top: 18.5%;
+    left: 3%;
     display: flex;
     flex-direction: column;
 }
 
 .settings-mml-info {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3%;
 
     margin-top: -12%;
 }
@@ -77,13 +78,15 @@
 .settings-mml-info-text {
     color: #b3b3b3;
     font-weight: 100;
-    font-size: 14px;
+    font-size: 16px;
     margin: 0;
     margin-left: .3vh;
+    margin-right: .5vh;
 }
 
-.settings-mml-info-text.website {
-    text-decoration: underline;
+.settings-mml-info-website {
+    width: 2.5vh;
+    height: 2.5vh;
     cursor: pointer;
 }
 .settings-mml-icon {

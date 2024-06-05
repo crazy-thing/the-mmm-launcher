@@ -17,17 +17,27 @@ function App() {
 
   const [noChange, setNoChange] = useState(false);
   const [settingPos, setSettingPos] = useState("-20%");
+  const [sidePanelPos, setSiePanelPos] = useState("0%");
 
   const fetchData = async () => {
     try {
       const modpacks = await getAllModpacks();
-      setAllModpacks(modpacks);
+      const sortedModpacks = modpacks.sort((a, b) => {
+        const indexA = a.index ? Number(a.index) : Infinity;
+        const indexB = b.index ? Number(b.index) : Infinity;
+        return indexA - indexB;
+      });
+      setAllModpacks(sortedModpacks);
+    
       if (selectedModpack == null) {
         const lastSelectedModpackId = JSON.parse(localStorage.getItem("lastSelectedModpack"));
         if (lastSelectedModpackId != null) {
           const modpackToSelect = modpacks.find(modpack => modpack.id === lastSelectedModpackId);
-          if (modpackToSelect) {
+          if (modpackToSelect != null) {
             setSelectedModpack(modpackToSelect);
+          } else {
+            setSelectedModpack(modpacks[0]);
+
           }
         } else {
           setSelectedModpack(modpacks[0]);
@@ -76,21 +86,35 @@ function App() {
 
   }, []);
 
-  return (
-    <div className='mml'>
+  useEffect(() => {
+    let timer;
+    if (settingPos === "0%") {
+      timer = setTimeout(() => setSiePanelPos("-20%"), 300);
+    } else {
+      setSiePanelPos("0%");
+    }
 
+    return () => clearTimeout(timer);
+  }, [settingPos]);
+
+  return (
+
+    <div className='mml'>
+    {selectedModpack && (
+        <img className='app-background' src={`https://minecraftmigos.me/uploads/${selectedModpack.background}`} />
+    )}
       {isLoading && (
         <LoadingScreen />
       )}
 
       <MainPanel modpack={selectedModpack} fetchData={fetchData} handleSetNoChange={handleSetNoChange} noChange={noChange} />
 
-      <SidePanel changeSettingPos={changeSettingPos} handleSelectModpack={handleSelectModpack} modpacks={allModpacks} />
+      <SidePanel pos={sidePanelPos} changeSettingPos={changeSettingPos} handleSelectModpack={handleSelectModpack} modpacks={allModpacks} />
 
       <Settings pos={settingPos} changeSettingPos={changeSettingPos} />
 
 
-    </div>
+    </div>    
   )
 }
 

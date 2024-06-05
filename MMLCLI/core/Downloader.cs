@@ -8,7 +8,7 @@ namespace MMLCLI.Core {
     public class Downloader
     {
         private static string apiKey = "$2a$10$PRMYXEXiKwjYUhsefOaeneSfam4VrzBImlKXPfd8d74Jc6Z0XdKPi";
-        private static readonly string baseApi = "http://server_ip:port/example/v1/";
+        private static readonly string baseApi = "https://minecraftmigos.me/example/v1/";
         private static string baseApiUrl = "https://api.curseforge.com/v1/mods/";
         private static string baseModPackDownloadUrl = "https://www.curseforge.com/api/v1/mods";
         private static readonly string modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
@@ -81,7 +81,7 @@ namespace MMLCLI.Core {
         {
             try
             {
-                string manifestFilePath = $"{instancePath}\\manifest.json";
+                string manifestFilePath = Path.Combine(instancePath, "manifest.json");; // change for other OS 
                 string manifestJson = File.ReadAllText(manifestFilePath);
                 var options = new JsonSerializerOptions
                 {
@@ -145,26 +145,26 @@ namespace MMLCLI.Core {
 
                                     if (classId == "12")
                                     {
-                                        if (!Directory.Exists($"{instancePath}\\resourcepacks\\"))
+                                        if (!Directory.Exists(Path.Combine(instancePath, "resourcepacks")))
                                         {
-                                            Directory.CreateDirectory($"{instancePath}\\resourcepacks\\");
+                                            Directory.CreateDirectory(Path.Combine(instancePath, "resourcepacks"));
                                         }          
                                     }
                                     else
                                     {
-                                        if (!Directory.Exists($"{instancePath}\\mods\\"))
+                                        if (!Directory.Exists(Path.Combine(instancePath, "mods")))
                                         {
-                                            Directory.CreateDirectory($"{instancePath}\\mods\\");
+                                            Directory.CreateDirectory(Path.Combine(instancePath, "mods"));
                                         }                                
                                     }
 
                                     if (classId == "12" )
                                     {
-                                        File.WriteAllBytes($"{instancePath}\\resourcepacks\\{fileName}", fileDownloadedData); 
+                                        File.WriteAllBytes(Path.Combine(instancePath, "resourcepacks", fileName), fileDownloadedData); 
                                     }
                                     else
                                     {
-                                        File.WriteAllBytes($"{instancePath}\\mods\\{fileName}", fileDownloadedData); 
+                                        File.WriteAllBytes(Path.Combine(instancePath, "mods", fileName), fileDownloadedData); 
                                     }
 
                                     Interlocked.Increment(ref processedFiles);

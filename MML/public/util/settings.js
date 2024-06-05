@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const { getAppDataPath } = require('./helper');
+
 
 const getSettings = () => {
     try {
-        const appDataPath = process.env.APPDATA;
-        const launcherFolder = path.join(appDataPath, 'MML');
-        const settingsPath = path.join(launcherFolder, 'settings.json');
+        const appDataPath = getAppDataPath();
+        const settingsPath = path.join(appDataPath, 'settings.json');
 
         const data = fs.readFileSync(settingsPath, 'utf-8'); 
         const allModpacks = JSON.parse(data);

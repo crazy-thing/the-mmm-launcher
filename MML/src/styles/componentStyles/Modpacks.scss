@@ -9,6 +9,8 @@
     max-height: 60%;
     overflow-y: auto;
     transition: max-height 0.4s ease-in-out, border-radius 0.4s ease-in-out, margin-bottom 0.4s ease-in-out;
+
+    overflow-x: hidden;
   }
   
   .modpacks-modpack {
@@ -20,6 +22,11 @@
     padding-left: 2vh;
   
     cursor: pointer;
+  }
+
+  .modpacks-row {
+    display: flex;
+    flex-direction: row;
   }
   
   .modpacks-modpack-thumbnail {

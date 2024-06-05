@@ -48,6 +48,7 @@ namespace MMLCLI.Util
         {
             try
             {
+                LoadAccounts();
                 accounts.Add(account);
                 SaveAccounts();                
             }
@@ -72,6 +73,7 @@ namespace MMLCLI.Util
             try
             {
                 File.Delete(jsonFilePath);
+                accounts.Clear();
                           
             }
             catch (Exception ex)

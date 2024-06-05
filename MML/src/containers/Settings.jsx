@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/containerStyles/Settings.scss';
 import SettingsSlider from '../components/SettingsSlider';
 import SettingsOption from '../components/SettingsOption';
-import { backIcon, mml } from '.././assets/exports';
+import { backIcon, github, globe, mml } from '.././assets/exports';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -16,8 +16,8 @@ const Settings = ({ pos, changeSettingPos }) => {
     };
     const opts = ["Minimize launcher to taskbar", "Exit launcher"];
 
-    const openWebsite = () => {
-        ipcRenderer.send("open-website");
+    const openWebsite = (url) => {
+        ipcRenderer.send("open-website", url);
     };
 
     useEffect(() => {
@@ -95,8 +95,9 @@ const Settings = ({ pos, changeSettingPos }) => {
             <div className='settings-mml'>
                 <img className='settings-mml-icon' src={mml} />
                 <div className='settings-mml-info'>
-                    <p className='settings-mml-info-text'> The MMM Launcher v1.0.0-beta </p>
-                    <p className='settings-mml-info-text website' onClick={() => openWebsite() }> https://themmmwebsite.netlify.app/ </p>
+                    <p className='settings-mml-info-text'> Minecraft Migos Launcher 1.0.1 </p>
+                    <img className='settings-mml-info-website ' src={globe} onClick={() => openWebsite("https://minecraftmigos.netlify.app/") } />
+                    <img className='settings-mml-info-website ' src={github} onClick={() => openWebsite("https://github.com/crazy-thing/the-mmm-launcher") } />
                 </div>
             </div>
          </div>

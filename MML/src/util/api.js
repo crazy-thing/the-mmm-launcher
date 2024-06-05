@@ -1,4 +1,4 @@
-const baseUrl = 'http://server_ip:port/example/v1';
+const baseUrl = 'https://minecraftmigos.me/example/v1';
 
 export const getAllModpacks = async () => {
     try {

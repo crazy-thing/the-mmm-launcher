@@ -2132,11 +2132,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\newmml\\mmlcli\\MMLCLI.csproj",
+      "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj",
       "projectName": "MMLCLI",
-      "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\newmml\\mmlcli\\MMLCLI.csproj",
+      "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj",
       "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\newmml\\mmlcli\\obj\\",
+      "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

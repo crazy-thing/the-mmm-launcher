@@ -1,4 +1,5 @@
 using CmlLib.Core;
+using CmlLib.Core.Auth.Microsoft;
 using MMLCLI.Models;
 using MMLCLI.Util;
 
@@ -31,6 +32,7 @@ namespace MMLCLI.Core
                 }
 
                 var session = AccountManager.GetAccount();
+
                 var settings = SettingsManager.settings;
 
                 Console.WriteLine(session);
@@ -47,7 +49,11 @@ namespace MMLCLI.Core
                     process.StartInfo.CreateNoWindow = false;
 
                     process.Start();
+
+
                     process.WaitForInputIdle();
+
+
                     
                     Console.WriteLine("game-launched");
 

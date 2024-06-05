@@ -92,19 +92,16 @@ namespace MMLCLI.Helpers {
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
             DirectoryInfo[] dirs = dir.GetDirectories();
 
-            // If the source directory does not exist, throw an exception.
             if (!dir.Exists)
             {
                 throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
             }
 
-            // If the destination directory does not exist, create it.
             if (!Directory.Exists(destDirName))
             {
                 Directory.CreateDirectory(destDirName);
             }
 
-            // Get the files in the directory and copy them to the new location.
             FileInfo[] files = dir.GetFiles();
             foreach (FileInfo file in files)
             {
@@ -112,7 +109,6 @@ namespace MMLCLI.Helpers {
                 file.CopyTo(temppath, false);
             }
 
-            // If copying subdirectories, copy them and their contents to new location.
             if (copySubDirs)
             {
                 foreach (DirectoryInfo subdir in dirs)
@@ -135,7 +131,6 @@ namespace MMLCLI.Helpers {
 
                 if (!Directory.Exists(correspondingExtractedDir))
                 {
-                    // Only delete the directory if it exists
                     if (Directory.Exists(existingDir))
                     {
                         Directory.Delete(existingDir, true);
@@ -164,7 +159,6 @@ namespace MMLCLI.Helpers {
 
                 if (!File.Exists(correspondingExtractedFile))
                 {
-                    // Only delete the file if it exists
                     if (File.Exists(existingFile))
                     {
                         File.Delete(existingFile);

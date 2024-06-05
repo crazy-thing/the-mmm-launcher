@@ -1,13 +1,15 @@
 const { app, BrowserWindow, ipcMain, shell, dialog} = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 const { signIn, getDefaultAccount } = require('./util/loginHandler');
 const { getInstalledVersions } = require('./util/installedVersions');
 const { getSettings } = require('./util/settings');
-const { parseProgress } = require('./util/helper');
+const { parseProgress, getAppDataPath } = require('./util/helper');
+const { autoUpdater } = require('electron-updater');
 
 let win;
-let isDev = false;
+let isDev = true;
 
 const iconPath = path.join(__dirname, 'mml.ico');
 function createWindow() {
@@ -22,10 +24,11 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            devTools: true,
         },
     });
 
-    backendProc = isDev ? spawn('dotnet', ['run', '--project', path.join(process.cwd(), '../MMLCLI/MMLCLI.csproj')]) :  spawn(path.join(__dirname, "\\backend\\MMLCLI.exe"));
+    backendProc = isDev ? spawn('dotnet', ['run', '--project', path.join(process.cwd(), '../MMLCLI/MMLCLI.csproj')]) :  spawn(path.join(__dirname, "backend", "MMLCLI.exe")); // MMLCLI for linux and macos
 
     backendProc.stdout.on('data', (data) => {
         console.log(`C# Backend Process: ${data}`);
@@ -71,8 +74,8 @@ function createWindow() {
                 }
                 break;
             case dataString.includes("Install-Complete"):
-                const versionId = dataString.split(' ')[1];
-                win.webContents.send("install-complete", versionId);
+                const modpackId = dataString.split(' ')[1];
+                win.webContents.send("install-complete", modpackId);
                 break;
             case dataString.includes("uninstall-complete"):
                 win.webContents.send("uninstall-complete");
@@ -113,11 +116,35 @@ function createWindow() {
     });
 
    isDev ? win.loadURL("http://localhost:5173/") : win.loadURL(`file://${path.join(__dirname, 'index.html')}`);
+
 };
 
-app.on('ready', () => {
+app.on('ready', function() {
     createWindow();
+    autoUpdater.checkForUpdatesAndNotify();
 });
+
+// Auto-updater events
+autoUpdater.on('update-available', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update available',
+      message: 'A new update is available. It will be downloaded in the background.'
+    });
+  });
+  
+  autoUpdater.on('update-downloaded', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update ready',
+      message: 'A new update is ready. Restart the application to apply the updates.',
+      buttons: ['Restart', 'Later']
+    }).then(result => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall(false, true);
+      }
+    });
+  });
 
 const showErrorMessage = (message) => {
     dialog.showMessageBox(win, {
@@ -141,13 +168,16 @@ ipcMain.on('get-settings', (event, arg) => {
     event.reply('settings', settings);
 });
 
-// get-default-account
-ipcMain.on('get-default-account', (event, arg) => {
-    const defaultAccount = getDefaultAccount();
+/* get-default-account
+ipcMain.on('get-default-account', async (event, arg) => {
+    const defaultAccount = await signIn();
     if (defaultAccount != null) {
         event.reply('default-account-reply', defaultAccount);
+        await backendProc.stdin.write(`sign-in ${JSON.stringify(defaultAccount)} \n`);
+
     }
 });
+*/
 
 // download-modpack <modpackModel>
 ipcMain.on('download-modpack', (event, arg) => {
@@ -164,13 +194,13 @@ ipcMain.on('launch-game', (event, arg) => {
     backendProc.stdin.write(`launch-game ${arg}\n`);
 });
 
+
 // sign-in <userAccountModel>
 ipcMain.on('sign-in', async (event, arg) => {
-    var UserAccountInfo = await signIn();
-    console.log(UserAccountInfo);
-    if (UserAccountInfo) {
-     await backendProc.stdin.write(`sign-in ${JSON.stringify(UserAccountInfo)} \n`);
-     event.reply('sign-in-reply', UserAccountInfo);
+    const UserAccount = await signIn();
+    if (UserAccount) {
+     await backendProc.stdin.write(`sign-in ${JSON.stringify(UserAccount)} \n`);
+     event.reply('sign-in-reply', UserAccount);
     } else {
      event.reply('sign-in-failed', "Sign-in failed");
     } 
@@ -178,7 +208,7 @@ ipcMain.on('sign-in', async (event, arg) => {
  
  // sign-out <gamerTag>
  ipcMain.on('sign-out', async (event, arg) => {
-     backendProc.stdin.write(`sign-out ${arg} \n`);
+     backendProc.stdin.write(`sign-out ${arg}\n`);
  });
 
  // change-setting <settingName> <value>
@@ -192,12 +222,11 @@ ipcMain.on('show-error', (event, arg) => {
 });
 
 // open-folder <path>
-ipcMain.on('open-folder', (event, path) => {    
-    shell.openPath(`${process.env.APPDATA}\\MML\\Minecraft\\Instances\\${path}`);
+ipcMain.on('open-folder', (event, p) => {    
+    shell.openPath(path.join(getAppDataPath(), "Minecraft", "Instances", p));
 });
 
 // ipc call to open mml website
-ipcMain.on('open-website', (event) => {
-    console.log("request got");
-    shell.openExternal("https://themmmwebsite.netlify.app/");
+ipcMain.on('open-website', (event, url) => {
+    shell.openExternal(url);
 });

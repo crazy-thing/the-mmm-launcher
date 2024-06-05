@@ -13,6 +13,8 @@ namespace MMLCLI.Core
     public class Installer
     {
         private static string minecraftRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft");
+        private static string runtimePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft", "runtime");
+
         private MinecraftPath path;
         private CMLauncher launcher;
         public CMLauncher InitializeLauncher(VersionModel version, string? modpackId = null)
@@ -25,9 +27,9 @@ namespace MMLCLI.Core
             {
                 Directory.CreateDirectory(minecraftRoot);
             }
-            path.BasePath = $"{minecraftRoot}\\Instances\\{modpackId}";
-            Console.WriteLine(path.BasePath);
-            path.Runtime = $"{minecraftRoot}/runtimes";
+
+            path.BasePath = Path.Combine(minecraftRoot, "Instances", modpackId);
+            path.Runtime = runtimePath;
             path.Library = $"{minecraftRoot}/libraries";
             path.Resource = $"{minecraftRoot}/resources";
             path.Versions = $"{minecraftRoot}/versions";
@@ -36,11 +38,11 @@ namespace MMLCLI.Core
             return launcher;
         }
 
-        public async Task InstallForgeVersion(VersionModel version)
+        public async Task InstallForgeVersion(VersionModel version, string modpackId)
         {
             try
             {
-                InitializeLauncher(version);
+                InitializeLauncher(version, modpackId);
 
                 var forge = new MForge(launcher);
                 forge.ProgressChanged += (s, e) =>
@@ -50,7 +52,7 @@ namespace MMLCLI.Core
 
                 Console.WriteLine(version.mcVersion + " " + version.modLoader);
                 var versionName = await forge.Install(version.mcVersion, version.modLoader); 
-                Console.WriteLine($"Install-Complete {version.id}");
+                Console.WriteLine($"Install-Complete {modpackId}");
 
 
             }
@@ -62,11 +64,11 @@ namespace MMLCLI.Core
 
         }
 
-        public async Task InstallFabricVersion(VersionModel version)
+        public async Task InstallFabricVersion(VersionModel version, string modpackId)
         {
             try
             {
-                InitializeLauncher(version);
+                InitializeLauncher(version, modpackId);
                 launcher.FileChanged += (e) =>
                 {
                     Console.WriteLine("FileKind: " + e.FileKind.ToString());
@@ -90,7 +92,7 @@ namespace MMLCLI.Core
                 var fabric = fabricVersions.GetVersionMetadata(fullName);
                 await fabric.SaveAsync(path);
                 await launcher.GetAllVersionsAsync();
-                Console.WriteLine($"Install-Complete {version.id}");
+                Console.WriteLine($"Install-Complete {modpackId}");
 
             }
             catch (Exception ex)
