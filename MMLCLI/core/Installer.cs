@@ -7,35 +7,64 @@ using CmlLib.Utils;
 using CmlLib.Core.Installer.FabricMC;
 using MMLCLI.Models;
 using CmlLib.Core.Version;
+using System.Runtime.InteropServices;
 
 namespace MMLCLI.Core
 {
     public class Installer
     {
         private static string minecraftRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft");
+        private static string minecraftRootMac = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "Minecraft");
+
         private static string runtimePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft", "runtime");
+        private static string runtimePathLinux = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".minecraft", "runtime");
+        private static string runtimePathMac = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "minecraft", "runtime");
+
 
         private MinecraftPath path;
         private CMLauncher launcher;
         public CMLauncher InitializeLauncher(VersionModel version, string? modpackId = null)
         {
-            path = new MinecraftPath();
-            launcher = new CMLauncher(path);
-            launcher.FileChanged += Launcher_FileChanged;
-
-            if (!Directory.Exists(minecraftRoot))
+            try
             {
-                Directory.CreateDirectory(minecraftRoot);
+                path = new MinecraftPath();
+                launcher = new CMLauncher(path);
+                launcher.FileChanged += Launcher_FileChanged;
+
+                string baseRoot = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? minecraftRootMac : minecraftRoot;
+
+                if (!Directory.Exists(baseRoot))
+                {
+                    Directory.CreateDirectory(baseRoot);
+                }
+
+                path.BasePath = Path.Combine(baseRoot, "Instances", modpackId ?? string.Empty);
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    path.Runtime = runtimePath;
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    path.Runtime = runtimePathLinux;
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    path.Runtime = runtimePathMac;
+                }
+
+                path.Library = Path.Combine(baseRoot, "libraries");
+                path.Resource = Path.Combine(baseRoot, "resources");
+                path.Versions = Path.Combine(baseRoot, "versions");
+                path.Assets = Path.Combine(baseRoot, "assets");
+
+                return launcher;
             }
-
-            path.BasePath = Path.Combine(minecraftRoot, "Instances", modpackId);
-            path.Runtime = runtimePath;
-            path.Library = $"{minecraftRoot}/libraries";
-            path.Resource = $"{minecraftRoot}/resources";
-            path.Versions = $"{minecraftRoot}/versions";
-            path.Assets = $"{minecraftRoot}/assets";
-
-            return launcher;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
         }
 
         public async Task InstallForgeVersion(VersionModel version, string modpackId)
@@ -43,7 +72,7 @@ namespace MMLCLI.Core
             try
             {
                 InitializeLauncher(version, modpackId);
-
+                
                 var forge = new MForge(launcher);
                 forge.ProgressChanged += (s, e) =>
                 {

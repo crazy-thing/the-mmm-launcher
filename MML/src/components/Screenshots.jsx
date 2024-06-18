@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/componentStyles/Screenshots.scss';
 
-const Screenshots = ({ screenshots }) => {
+const Screenshots = ({ screenshots, onClick }) => {
     const renderScreenshots = () => {
         const rows = [];
         for (let i = 0; i < screenshots.length; i+= 3 ) {
@@ -14,6 +14,7 @@ const Screenshots = ({ screenshots }) => {
                             className='screenshots-screenshot'
                             src={`https://minecraftmigos.me/uploads/${screenshot}`}
                             alt={`Screenshot ${i + index}`}
+                            onClick={() => onClick(i + index)}
                         />
                     ))}
                 </div>

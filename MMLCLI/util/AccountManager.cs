@@ -1,17 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
 using CmlLib.Core.Auth.Microsoft;
 using MMLCLI.Models;
 
-
 namespace MMLCLI.Util
 {
     public class AccountManager
     {
-        private static string jsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "userAccounts.json");
+        private static readonly string jsonFilePath;
 
         private static List<UserAccountModel> accounts;
+
+        static AccountManager()
+        {
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                jsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "userAccounts.json");
+            }
+            else
+            {
+                jsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "userAccounts.json");
+            }
+        }
 
         public static void LoadAccounts()
         {
@@ -30,7 +47,6 @@ namespace MMLCLI.Util
         {
             try
             {
-
                 if (!Directory.Exists(Path.GetDirectoryName(jsonFilePath)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(jsonFilePath));
@@ -74,13 +90,11 @@ namespace MMLCLI.Util
             {
                 File.Delete(jsonFilePath);
                 accounts.Clear();
-                          
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-
         }
 
         public static string ListAccounts()

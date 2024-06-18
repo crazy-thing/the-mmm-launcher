@@ -12,6 +12,7 @@
     <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.0.2" />
     <PackageReference Include="CmlLib.Core.Installer.Forge" Version="0.0.3" />
     <PackageReference Include="ComputerInfo" Version="0.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

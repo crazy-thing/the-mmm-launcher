@@ -1,15 +1,19 @@
 {
   "name": "MML",
-  "author": "Joshua Powell",
-  "version": "1.0.1",
+  "author": {
+    "name": "Joshua Powell",
+    "url": "https://github.com/crazy-thing/"
+  },
+  "version": "1.0.4",
   "private": true,
-  "icon": "./mml.ico",
   "main": "public/main.js",
   "homepage": "./",
+  "icon": "./mml.ico",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "dist": "electron-builder",
+    "dist-all": "electron-builder -mw",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "package-linux": "electron-packager . MML --platform=linux --arch=x64 --icon=./mml.ico",
@@ -28,20 +32,25 @@
       "package.json",
       "mml.ico"
     ],
+    "mac": {
+      "icon": "./mml.icns",
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
     "win": {
       "target": "nsis",
       "icon": "./mml.ico"
     },
-    "mac": {
-      "target": "dmg",
-      "icon": "./mml.ico"
-    },
     "linux": {
+      "icon": "./mml.png",
       "target": [
-        "AppImage",
-        "deb"
-      ],
-      "icon": "./mml.ico"
+        "rpm",
+        "deb",
+        "pacman"
+      ]
     },
     "asar": false,
     "publish": [

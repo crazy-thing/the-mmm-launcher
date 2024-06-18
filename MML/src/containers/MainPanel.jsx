@@ -7,6 +7,7 @@ import Changelog from '../components/Changelog';
 import Screenshots from '../components/Screenshots';
 import { folderIcon, trashIcon } from '../assets/exports';
 import PreloadImages from '../components/PreloadImages';
+import ScreenshotViewer from '../components/ScreenshotViewer';
 
 const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
 
@@ -22,12 +23,29 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
 
   const [update, setUpdate] = useState(false);
 
-  const [selectedItem, setSelectedItem] = useState("description");
+  const [selectedItem, setSelectedItem] = useState("screenshots");
 
   const [showDel, setShowDel] = useState(false);
 
   const [isOverflowing, setIsOverflowing] = useState(false);
 
+  const [index, setIndex] = useState(null);
+
+  const openViewer = (index) => {
+    setIndex(index);
+  };
+
+  const closeViewer = () => {
+    setIndex(null);
+  };
+
+  const nextScreenshot = () => {
+    setIndex((prevIndex) => (prevIndex + 1) % modpack.screenshots.length);
+  };
+
+  const prevScreenshot = () => {
+    setIndex((prevIndex) => (prevIndex - 1 + modpack.screenshots.length) % modpack.screenshots.length);
+  };
 
   const noVersionError = () => {
     ipcRenderer.send('show-error', "Please select a version before launching!");
@@ -116,7 +134,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
       console.log("No or wrong version installed. Either update or confirm item is installed");
     }
 
-    setSelectedItem("description")
+    setSelectedItem("screenshots")
   }, [modpack]);
 
   useEffect(() => {
@@ -127,6 +145,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
       setIsInstalling(false);
       setVerInstalling(null);
       handleSetNoChange(false);
+      setProgress(100);
       fetchData();
     });
 
@@ -154,14 +173,16 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
 
     const renderInfo = () => {
       switch (selectedItem) {
+        /* 
         case "description":
           return (
             <div className='parsed-content' dangerouslySetInnerHTML={{ __html: modpack.description}} />
           );
+        */
         case "screenshots":
           return (
             <div>
-              <Screenshots screenshots={modpack.screenshots} />
+              <Screenshots screenshots={modpack.screenshots} onClick={openViewer} />
             </div>
           );
         case "changelog":
@@ -181,6 +202,11 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
         {showDel && (
           <ConfirmDelete onConfirm={() => handleConfirmed(true)} onCancel={() => handleConfirmed(false)} />
         )}
+
+        {index != null && (
+          <ScreenshotViewer modpack={modpack} index={index} onClose={closeViewer} onNext={nextScreenshot} onPrev={prevScreenshot} />
+        )}
+
         {/*
           {modpack && (
               <img className='main-panel-background' src={`https://minecraftmigos.me/uploads/${modpack.background}`} />
@@ -229,6 +255,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
   
                   </div>
                   <div className='main-panel-content-description-header'>
+                    {/* 
                     <span className='main-panel-content-description-header-text-container'>
                       <p 
                         className={`main-panel-content-description-header-text ${selectedItem === "description" && "selected"}`} 
@@ -237,6 +264,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
                         DESCRIPTION
                       </p>
                     </span>
+                    */}
                     <span className='main-panel-content-description-header-text-container'>
                       <p 
                         className={`main-panel-content-description-header-text ${selectedItem === "screenshots" && "selected"}`} 

@@ -10,6 +10,10 @@ export { default as mml } from './mml.png';
 export { default as carretDown } from './carretDown.svg';
 export { default as globe } from './globe.svg';
 export { default as github } from './github.svg';
+export { default as close } from './close.svg';
+export { default as left } from './left.svg';
+export { default as right } from './right.svg';
+
 
 
 

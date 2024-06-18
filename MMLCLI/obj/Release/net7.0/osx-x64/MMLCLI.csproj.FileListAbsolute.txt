@@ -202,7 +202,8 @@ C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MML
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.AssemblyInfoInputs.cache
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.AssemblyInfo.cs
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.csproj.CoreCompileInputs.cache
-C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.csproj.CopyComplete
+C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.sourcelink.json
+C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.csproj.Up2Date
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\refint\MMLCLI.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\osx-x64\MMLCLI.pdb

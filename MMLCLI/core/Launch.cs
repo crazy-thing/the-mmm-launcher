@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using CmlLib.Core;
 using CmlLib.Core.Auth.Microsoft;
 using MMLCLI.Models;
@@ -51,10 +52,11 @@ namespace MMLCLI.Core
                     process.Start();
 
 
-                    process.WaitForInputIdle();
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        process.WaitForInputIdle();       
+                    }
 
-
-                    
                     Console.WriteLine("game-launched");
 
                     if (settings.ExitLauncher == true)

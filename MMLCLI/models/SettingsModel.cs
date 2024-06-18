@@ -7,7 +7,7 @@ namespace MMLCLI.Models {
         public bool ExitLauncher { get; set; } = false;
         public bool RunOnStart { get; set; } = false;
         public bool DoNotRunStart { get; set; } = true;
-        public string MinMem { get; set; } = "4096";
+        public string MinMem { get; set; } = "512";
         private string _maxMem;
         public string MaxMem
         {

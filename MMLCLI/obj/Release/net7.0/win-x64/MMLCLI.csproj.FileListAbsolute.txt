@@ -193,7 +193,7 @@ C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\cre
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\hostfxr.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\hostpolicy.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\mscordaccore.dll
-C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\mscordaccore_amd64_amd64_7.0.1123.42427.dll
+C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\mscordaccore_amd64_amd64_7.0.2024.26716.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\mscordbi.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\mscorrc.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\bin\Release\net7.0\win-x64\msquic.dll
@@ -202,7 +202,8 @@ C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MML
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.AssemblyInfoInputs.cache
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.AssemblyInfo.cs
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.csproj.CoreCompileInputs.cache
-C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.csproj.CopyComplete
+C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.sourcelink.json
+C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.csproj.Up2Date
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\refint\MMLCLI.dll
 C:\Users\crazy\Documents\MMMDevTest\NewMML\mmlcli\obj\Release\net7.0\win-x64\MMLCLI.pdb

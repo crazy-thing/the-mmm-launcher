@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using MMLCLI.Models;
 
@@ -5,8 +8,23 @@ namespace MMLCLI.Util
 {
     public class SettingsManager
     {
-        private static string settingsJsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "settings.json");
+        private static readonly string settingsJsonPath;
+
+        static SettingsManager()
+        {
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                settingsJsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "settings.json");
+            }
+            else
+            {
+                settingsJsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "settings.json");
+            }
+        }
+
         public static SettingsModel settings;
+
         public static void LoadSettings()
         {
             if (File.Exists(settingsJsonPath))
@@ -40,11 +58,10 @@ namespace MMLCLI.Util
 
         public static void ChangeSetting(string settingName, object value)
         {
-            var property =  typeof(SettingsModel).GetProperty(settingName);
+            var property = typeof(SettingsModel).GetProperty(settingName);
             if (property != null)
             {
                 property.SetValue(settings, Convert.ChangeType(value, property.PropertyType));
-
                 SaveSettings();
             }
             else
@@ -52,6 +69,5 @@ namespace MMLCLI.Util
                 Console.WriteLine($"Setting '{settingName}' not found");
             }
         }
-
     }
 }

@@ -1,6 +1,10 @@
+using System;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using MMLCLI.Models;
 using MMLCLI.Core;
 
@@ -8,17 +12,31 @@ namespace MMLCLI.Util
 {
     public static class ModpackManager
     {
-        private static readonly string modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
-        private static string modpacksJsonFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "modpacks.json");
+        private static readonly string modpacksDir;
+        private static readonly string modpacksJsonFile;
         private static readonly string baseApi = "https://minecraftmigos.me/example/v1/";
         public static ObservableCollection<ModpackModel> modpacks;
+
+        static ModpackManager()
+        {
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "Minecraft", "Instances");
+                modpacksJsonFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "modpacks.json");
+            }
+            else
+            {
+                modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
+                modpacksJsonFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "modpacks.json");
+            }
+        }
+
         public static bool IsVersionDownloaded(string modpackId)
         {
             string modpackPath = Path.Combine(modpacksDir, modpackId);
-            
             return Directory.Exists(modpackPath);
         }
-
 
         public static async void AddModpack(ModpackModel modpack, Manifest manifest)
         {
@@ -40,35 +58,35 @@ namespace MMLCLI.Util
                     modpacks.Add(existingModpack);
                 }
 
-                    ModLoader fabricLoader = manifest.minecraft.modLoaders.FirstOrDefault(loader => loader.id.Contains("fabric"));
-                    ModLoader forgeLoader = manifest.minecraft.modLoaders.FirstOrDefault(loader => loader.id.ToLower().Contains("forge"));
+                ModLoader fabricLoader = manifest.minecraft.modLoaders.FirstOrDefault(loader => loader.id.Contains("fabric"));
+                ModLoader forgeLoader = manifest.minecraft.modLoaders.FirstOrDefault(loader => loader.id.ToLower().Contains("forge"));
 
-                    if (fabricLoader != null)
-                    {
-                        string fabricVersion = Regex.Replace(fabricLoader.id, @"[^\d.]", "");
-                        existingModpack.mainVersion.mcVersion = manifest.minecraft.version;
-                        existingModpack.mainVersion.modLoader = fabricVersion;
-                        existingModpack.mainVersion.modName = "fabric";
-                        existingModpack.mainVersion.ParentModpackName = existingModpack.name;
-                        SaveModpacks();
-                        await installer.InstallFabricVersion(existingModpack.mainVersion, modpack.id);
-                    }
-                    else if (forgeLoader != null)
-                    {
-                        Console.WriteLine(forgeLoader.id);
-                        string forgeVersion = Regex.Replace(forgeLoader.id, @"[^\d.]", "");
-                        Console.WriteLine(forgeVersion);
-                        existingModpack.mainVersion.mcVersion = manifest.minecraft.version;
-                        existingModpack.mainVersion.modLoader = forgeVersion;
-                        existingModpack.mainVersion.modName = "forge";
-                        existingModpack.mainVersion.ParentModpackName = existingModpack.name;
-                        SaveModpacks();
-                        await installer.InstallForgeVersion(existingModpack.mainVersion, modpack.id);
-                    }
-                    else
-                    {
-                        Console.WriteLine("No mod loader");
-                    }
+                if (fabricLoader != null)
+                {
+                    string fabricVersion = Regex.Replace(fabricLoader.id, @"[^\d.]", "");
+                    existingModpack.mainVersion.mcVersion = manifest.minecraft.version;
+                    existingModpack.mainVersion.modLoader = fabricVersion;
+                    existingModpack.mainVersion.modName = "fabric";
+                    existingModpack.mainVersion.ParentModpackName = existingModpack.name;
+                    SaveModpacks();
+                    await installer.InstallFabricVersion(existingModpack.mainVersion, modpack.id);
+                }
+                else if (forgeLoader != null)
+                {
+                    Console.WriteLine(forgeLoader.id);
+                    string forgeVersion = Regex.Replace(forgeLoader.id, @"[^\d.]", "");
+                    Console.WriteLine(forgeVersion);
+                    existingModpack.mainVersion.mcVersion = manifest.minecraft.version;
+                    existingModpack.mainVersion.modLoader = forgeVersion;
+                    existingModpack.mainVersion.modName = "forge";
+                    existingModpack.mainVersion.ParentModpackName = existingModpack.name;
+                    SaveModpacks();
+                    await installer.InstallForgeVersion(existingModpack.mainVersion, modpack.id);
+                }
+                else
+                {
+                    Console.WriteLine("No mod loader");
+                }
             }
             catch (Exception ex)
             {
@@ -94,9 +112,9 @@ namespace MMLCLI.Util
                     {
                         Console.WriteLine($"Directory {modpack.InstancePath} not found.");
                     }
-                        modpacks.Remove(modpack);
-                        SaveModpacks();
-                        Console.WriteLine("uninstall-complete \n");
+                    modpacks.Remove(modpack);
+                    SaveModpacks();
+                    Console.WriteLine("uninstall-complete \n");
                 }
                 else
                 {
@@ -121,6 +139,7 @@ namespace MMLCLI.Util
                 modpacks = new ObservableCollection<ModpackModel>();
             }
         }
+
         public static string CheckForInstalledVersions()
         {
             if (File.Exists(modpacksJsonFile))
@@ -134,6 +153,7 @@ namespace MMLCLI.Util
                 return null;
             }
         }
+
         public static void SaveModpacks()
         {
             try
@@ -150,7 +170,5 @@ namespace MMLCLI.Util
                 Console.WriteLine(ex);
             }
         }
-
     }
-
 }

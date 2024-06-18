@@ -3,6 +3,7 @@ using MMLCLI.Models;
 using MMLCLI.Helpers;
 using Newtonsoft.Json.Linq;
 using MMLCLI.Util;
+using System.Runtime.InteropServices;
 
 namespace MMLCLI.Core {
     public class Downloader
@@ -11,10 +12,19 @@ namespace MMLCLI.Core {
         private static readonly string baseApi = "https://minecraftmigos.me/example/v1/";
         private static string baseApiUrl = "https://api.curseforge.com/v1/mods/";
         private static string baseModPackDownloadUrl = "https://www.curseforge.com/api/v1/mods";
-        private static readonly string modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
+        private static readonly string modpacksDir;
 
-        // Use modpackId instead of model and pull modpack model from api
-        public async Task DownloadManifest(ModpackModel modpack)
+        static Downloader()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "MML", "Minecraft", "Instances");
+            }
+            else
+            {
+                modpacksDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MML", "Minecraft", "Instances");
+            }
+        }        public async Task DownloadManifest(ModpackModel modpack)
         {
             try 
             {
