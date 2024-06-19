@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj": {}
+    "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\mmlcli\\MMLCLI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj": {
+    "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\mmlcli\\MMLCLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj",
+        "projectUniqueName": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\mmlcli\\MMLCLI.csproj",
         "projectName": "MMLCLI",
-        "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\MMLCLI.csproj",
+        "projectPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\mmlcli\\MMLCLI.csproj",
         "packagesPath": "C:\\Users\\crazy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\MMLCLI\\obj\\",
+        "outputPath": "C:\\Users\\crazy\\Documents\\MMMDevTest\\NewMML\\mmlcli\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -88,6 +88,10 @@
               "version": "[7.0.20, 7.0.20]"
             },
             {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
               "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[7.0.20, 7.0.20]"
             },
@@ -96,7 +100,15 @@
               "version": "[7.0.20, 7.0.20]"
             },
             {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
               "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
               "version": "[7.0.20, 7.0.20]"
             }
           ],
@@ -106,6 +118,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

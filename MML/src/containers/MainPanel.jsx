@@ -39,11 +39,15 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange,  }) => {
     setIndex(null);
   };
 
-  const nextScreenshot = () => {
+  const nextScreenshot = (e) => {
+    e.stopPropagation();
+
     setIndex((prevIndex) => (prevIndex + 1) % modpack.screenshots.length);
   };
 
-  const prevScreenshot = () => {
+  const prevScreenshot = (e) => {
+    e.stopPropagation();
+
     setIndex((prevIndex) => (prevIndex - 1 + modpack.screenshots.length) % modpack.screenshots.length);
   };
 

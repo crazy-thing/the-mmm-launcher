@@ -30,8 +30,8 @@ const SettingsOption = ({ options, handleChangeSetting, selected }) => {
       {options.map((option, index) => (
         <div key={index} className='settings-option'>
           <svg
-            width="20"
-            height="20"
+            width="3vh"
+            height="3vh"
             viewBox='0 0 100 100'
             onClick={() => toggleOption(index)}
             style={{ cursor: 'pointer' }}

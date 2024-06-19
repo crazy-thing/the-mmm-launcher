@@ -50,7 +50,6 @@ namespace MMLCLI.Core {
                         using (Stream stream = await content.ReadAsStreamAsync())
                         using (FileStream fileStream = File.Create(filePath))
                         {
-                            // Download the modpack file
                             byte[] buffer = new byte[8192];
                             int bytesRead;
                             long totalBytesRead = 0;
@@ -91,8 +90,8 @@ namespace MMLCLI.Core {
         {
             try
             {
-                string manifestFilePath = Path.Combine(instancePath, "manifest.json");; // change for other OS 
-                string manifestJson = File.ReadAllText(manifestFilePath);
+                string manifestFilePath = Path.Combine(instancePath, "manifest.json");
+                string manifestJson = await File.ReadAllTextAsync(manifestFilePath);
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -103,90 +102,73 @@ namespace MMLCLI.Core {
                 int totalFiles = manifest.files.Count();
                 int processedFiles = 0;
 
+                using HttpClient client = new HttpClient
+                {
+                    Timeout = TimeSpan.FromMinutes(10)
+                };
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+
+                int maxDegreeOfParallelism = 30;
+                var semaphore = new SemaphoreSlim(maxDegreeOfParallelism);
+
                 var downloadTasks = manifest.files.Select(async mod =>
                 {
+                    await semaphore.WaitAsync();
                     try
                     {
-                        using (HttpClient client = new HttpClient())
+                        string modDataUrl = $"{baseApiUrl}{mod.projectID}/files/{mod.fileID}";
+                        string modInfoUrl = $"{baseApiUrl}{mod.projectID}";
+
+                        using HttpResponseMessage res = await client.GetAsync(modDataUrl, HttpCompletionOption.ResponseHeadersRead);
+                        using HttpResponseMessage res2 = await client.GetAsync(modInfoUrl, HttpCompletionOption.ResponseHeadersRead);
+
+                        string fileName = string.Empty;
+                        string classId = string.Empty;
+                        if (res.IsSuccessStatusCode)
                         {
-                            client.DefaultRequestHeaders.Add("Accept", "application/json");
-                            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+                            var resContent = await res.Content.ReadAsStringAsync();
+                            JObject jObject = JObject.Parse(resContent);
 
-                            string modDataUrl = $"{baseApiUrl}{mod.projectID}/files/{mod.fileID}";
-                            string modInfoUrl = $"{baseApiUrl}{mod.projectID}";
-                            HttpResponseMessage res = await client.GetAsync(modDataUrl);
-                            HttpResponseMessage res2 = await client.GetAsync(modInfoUrl);
-
-                            string fileName = string.Empty;
-                            string classId = string.Empty;
-                            if (res.IsSuccessStatusCode)
+                            if (jObject["data"] != null && jObject["data"]["fileName"] != null)
                             {
-                                var resContent = await res.Content.ReadAsStringAsync();
-                                JObject jObject = JObject.Parse(resContent);
-                                if (jObject["data"] == null)
+                                fileName = jObject["data"]["fileName"].ToString();
+                                if (res2.IsSuccessStatusCode)
                                 {
-                                    Console.WriteLine("data is null");
+                                    var res2Content = await res2.Content.ReadAsStringAsync();
+                                    JObject jObject2 = JObject.Parse(res2Content);
+                                    classId = jObject2["data"]["classId"]?.ToString();
                                 }
-                                else
-                                {
-                                    if (jObject["data"]["fileName"] != null)
-                                    {
-                                        fileName = jObject["data"]["fileName"].ToString();
-                                        
-                                        if (res2.IsSuccessStatusCode) {
-                                            var res2Content = await res2.Content.ReadAsStringAsync();
-                                            JObject jObject2 = JObject.Parse(res2Content);
 
-                                            classId = jObject2["data"]["classId"].ToString();
-                                            Console.WriteLine($"CLASSID: {classId}");
-                                        }
-                                        Console.WriteLine($"Filename: {fileName}");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("filename is null");
-                                    }
+                                string projId = mod.projectID.ToString();
+                                string fileId = mod.fileID.ToString();
+                                string modDownloadUrl = $"{baseModPackDownloadUrl}\\{projId}\\files\\{fileId}\\download\\";
 
-                                    string projId = mod.projectID.ToString();
-                                    string fileId = mod.fileID.ToString();
-                                    string modDownloadUrl = $"{baseModPackDownloadUrl}\\{projId}\\files\\{fileId}\\download\\";
+                                using var fileDownloadedStream = await client.GetStreamAsync(modDownloadUrl);
 
-                                    byte[] fileDownloadedData = await client.GetByteArrayAsync(modDownloadUrl);
+                                string destinationDirectory = classId == "12"
+                                    ? Path.Combine(instancePath, "resourcepacks")
+                                    : Path.Combine(instancePath, "mods");
 
-                                    if (classId == "12")
-                                    {
-                                        if (!Directory.Exists(Path.Combine(instancePath, "resourcepacks")))
-                                        {
-                                            Directory.CreateDirectory(Path.Combine(instancePath, "resourcepacks"));
-                                        }          
-                                    }
-                                    else
-                                    {
-                                        if (!Directory.Exists(Path.Combine(instancePath, "mods")))
-                                        {
-                                            Directory.CreateDirectory(Path.Combine(instancePath, "mods"));
-                                        }                                
-                                    }
+                                Directory.CreateDirectory(destinationDirectory);
+                                string destinationPath = Path.Combine(destinationDirectory, fileName);
 
-                                    if (classId == "12" )
-                                    {
-                                        File.WriteAllBytes(Path.Combine(instancePath, "resourcepacks", fileName), fileDownloadedData); 
-                                    }
-                                    else
-                                    {
-                                        File.WriteAllBytes(Path.Combine(instancePath, "mods", fileName), fileDownloadedData); 
-                                    }
+                                using var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                                await fileDownloadedStream.CopyToAsync(fileStream);
 
-                                    Interlocked.Increment(ref processedFiles);
-                                    double progress = (double)processedFiles / totalFiles * 100;
-                                    Console.WriteLine($"Mod Progress: {progress:F0}% for {fileName}");
-                                }
+                                Interlocked.Increment(ref processedFiles);
+                                double progress = (double)processedFiles / totalFiles * 100;
+                                Console.WriteLine($"Mod Progress: {progress:F0}% for {fileName}");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"An error occurred during download: {ex.Message}");
+                    }
+                    finally
+                    {
+                        semaphore.Release();
                     }
                 });
 
@@ -199,6 +181,5 @@ namespace MMLCLI.Core {
                 return null;
             }
         }
-
     }
 }

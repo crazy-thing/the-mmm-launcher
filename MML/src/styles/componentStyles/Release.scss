@@ -1,9 +1,10 @@
 .release {
     width: 98%;
     padding: 1%;
-    height: 25vh;
-    max-height: 25vh;
+    min-height: 30vh;
+    max-height: 30vh;
 
+    margin-bottom: 6vh;
     overflow-y: auto;
     overflow-x: hidden;
     font-family: var(--font-family-secondary);
@@ -12,9 +13,13 @@
 }
 
 .release-version {
-    font-size: 2.5vh;
+    font-size: 2.8vh!important;
     font-weight: bold;
     text-decoration: underline;
     margin: 0;
     margin-bottom: 1vh;
+}
+
+.release-changelog {
+    font-size: 2vh;
 }

@@ -17,14 +17,16 @@ function createWindow() {
     win = new BrowserWindow({
         width: 1600,
         height: 900,
-        minWidth: 1400,
-        minHeight: 800,
+        minWidth: 1100,
+        minHeight: 600,
         autoHideMenuBar: true,
         icon: iconPath,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             devTools: false,
+            enablePreferredSizeMode: true,
+            zoomFactor: 1.0
         },
     });
 
