@@ -1,0 +1,49 @@
+.screenshots {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.screenshots-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0%;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.screenshots-screenshot {
+    width: 44vh;
+    height: 25vh;
+    min-width: 44vh;
+    min-height: 25vh;
+    max-width: 44vh;
+    max-height: 25vh;
+}
+
+.screenshot-container {
+    position: relative;
+}
+
+.screenshot-container.placeholder {
+    width: 44vh;
+    height: 25vh;
+    min-width: 44vh;
+    min-height: 25vh;
+    max-width: 44vh;
+    max-height: 25vh;
+}
+
+.screenshot-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+
+    width: 3vh;
+    height: 3vh;
+    cursor: pointer;
+}

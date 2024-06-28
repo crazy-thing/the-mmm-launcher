@@ -1,0 +1,47 @@
+.screenshot-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 100000;
+    width: 100%;
+    height: 100%;
+    background: #000000e8;;
+}
+
+.screenshot-viewer {
+    width: 100%;
+    height: 90%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3%;
+}
+
+.screenshot-viewer-close {
+    position: fixed;
+    top: 3%;
+    right: 3%;
+    width: 4vh;
+    height: 4vh;
+
+    cursor: pointer;
+}
+
+.screenshot-viewer-image {
+    width: 70vw;
+    height: 70vh;
+}
+
+.screenshot-viewer-buttons {
+    width: 3vh;
+    padding: 2vh;
+    margin: -2vh;
+    cursor: pointer;
+
+}

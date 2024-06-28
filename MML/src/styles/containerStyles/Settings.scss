@@ -1,0 +1,143 @@
+.settings {
+    position: absolute;
+    top: 0;
+    right: -20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20%;
+    height: 100%;
+
+    transition: right 0.3s ease-in;
+
+    background: var(--primary-color);
+    font-family: var(--font-family-secondary);
+    color: #fff;
+}
+
+
+.settings-header, .settings-body-header {
+    width: 100%;
+    height: fit-content;
+}
+
+.settings-header {
+    padding: 6% 0;
+    margin-bottom: 1vh;
+}
+
+.settings-header-back {
+    position: absolute;
+    right: .3%;
+    top: 1%;
+    cursor: pointer;
+    width: 6vh;
+    height: 6vh;
+}
+
+.settings-header-text, .settings-body-header-text {
+    margin: 0;
+    margin-left: 5%;
+}
+
+.settings-header-text {
+    font-size: 1.9vw;
+    font-weight: 600;
+}
+
+.settings-body-text {
+    font-size: .9vw;
+    margin: 0;
+    color: #c0c0c0;
+}
+
+.settings-body-ram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90%;
+    padding: 0 5%;
+    margin-top: 5vh;
+}
+
+.settings-body-ram-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5%;
+    border: 2px solid #4e4e4e;
+}
+
+.settings-body-ram-content * {
+    margin: 2.5% 0;
+    color: #c0c0c0;
+    font-size: .9vw;
+}
+
+.settings-body-header {
+    padding: 6px 0;
+    background: #2e2e2e;
+}
+
+.settings-body-header-text {
+    font-size: 1.1vw;
+}
+
+.settings-mml {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 3%;
+    margin-bottom: 10px!important;
+}
+
+.settings-mml-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+    }
+
+.settings-mml-info-text {
+    color: #b3b3b3;
+    font-weight: 100;
+    font-size: 1.06vw;
+    margin: 0;
+    margin-left: .3vh;
+    margin-right: .5vh;
+    margin-top: -5vh;
+}
+
+.settings-mml-info-website {
+    width: 2.5vh;
+    height: 2.5vh;
+    cursor: pointer;
+}
+
+.settings-mml-info-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 25%;
+    padding-right: 8%;
+    margin-top: 4vh;
+}
+
+.settings-mml-icon {
+    width: 20vh;
+    height: 20vh;
+    margin: 0;
+    padding: 0;
+}
+
+.settings-body-text-container {
+    display: flex;
+    margin: 0;
+    margin-left: 5%;
+    margin-top: 3%;
+    gap: 2%;
+}
