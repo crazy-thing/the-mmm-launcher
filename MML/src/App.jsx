@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import './App.scss'
+import { useEffect, useState, useRef } from 'react';
+import './App.scss';
 import LoadingScreen from './components/LoadingScreen';
 import SidePanel from './containers/SidePanel';
 import { getAllModpacks } from './util/api';
@@ -18,11 +18,12 @@ function App() {
 
   const [noChange, setNoChange] = useState(false);
   const [settingPos, setSettingPos] = useState("-20%");
-  const [sidePanelPos, setSiePanelPos] = useState("0%");
+  const [sidePanelPos, setSidePanelPos] = useState("0%");
 
   const [animation, setAnimation] = useState(null);
   const [mpAnimation, setMpAnimation] = useState(null);
 
+  const animationRef = useRef(null);
 
   const fetchData = async () => {
     try {
@@ -42,7 +43,6 @@ function App() {
             setSelectedModpack(modpackToSelect);
           } else {
             setSelectedModpack(modpacks[0]);
-
           }
         } else {
           setSelectedModpack(modpacks[0]);
@@ -65,20 +65,29 @@ function App() {
     } else {
         setNextModpack(modpack);
         setAnimation("fade .6s ease-in-out infinite alternate");
-        // setMpAnimation({animation: "roll-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"});
-        setMpAnimation({animation: "slide-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"});
-        setTimeout(() => {
-          setAnimation(null);
-          // setMpAnimation({animation: "roll-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"});
-          setMpAnimation({animation: "slide-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"}); 
+        setMpAnimation({
+          animation: "slide-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"
+        });
 
-          setSelectedModpack(modpack);
-          localStorage.setItem('lastSelectedModpack', JSON.stringify(modpack.id));
-          console.log("Selected Modpack: ", modpack);
-        }, 300);
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
 
-      };
+        const startAnimation = () => {
+          animationRef.current = requestAnimationFrame(() => {
+            setAnimation(null);
+            setMpAnimation({
+              animation: "slide-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"
+            });
 
+            setSelectedModpack(modpack);
+            localStorage.setItem('lastSelectedModpack', JSON.stringify(modpack.id));
+            console.log("Selected Modpack: ", modpack);
+          });
+        };
+
+        setTimeout(startAnimation, 300);
+    }
   };
 
   const changeSettingPos = (pos) => {
@@ -90,7 +99,6 @@ function App() {
   };
 
   useEffect(() => {
-
     fetchData();
     ipcRenderer.on('installed-versions', (event, versions) => {
       handleSetNoChange(false);
@@ -98,51 +106,41 @@ function App() {
       setIsLoading(false);
     });
 
-
     return () => {
       ipcRenderer.removeAllListeners('installed-versions');
     };
-
   }, []);
 
   useEffect(() => {
     let timer;
     if (settingPos === "0%") {
-      timer = setTimeout(() => setSiePanelPos("-20%"), 300);
+      timer = setTimeout(() => setSidePanelPos("-20%"), 300);
     } else {
-      setSiePanelPos("0%");
+      setSidePanelPos("0%");
     }
 
     return () => clearTimeout(timer);
   }, [settingPos]);
 
   const animationStyle = {
-    animation: animation
+    animation: animation,
+    willChange: "opacity"
   }
 
   return (
-
     <div className='mml'>
-    {selectedModpack && (
-      <div className='app-background-container'>
-        <img className={`app-background-next`} src={`https://minecraftmigos.me/uploads/${nextModpack && nextModpack.background}`} />
-        <img className={`app-background`} style={animationStyle}  src={`https://minecraftmigos.me/uploads/${selectedModpack && selectedModpack.background}`} />
-      </div>
-    )}
-      {isLoading && (
-        <LoadingScreen />
+      {selectedModpack && (
+        <div className='app-background-container'>
+          <img className={`app-background-next`} src={`https://minecraftmigos.me/uploads/${nextModpack && nextModpack.background}`} />
+          <img className={`app-background`} style={animationStyle}  src={`https://minecraftmigos.me/uploads/${selectedModpack && selectedModpack.background}`} />
+        </div>
       )}
-
+      {isLoading && <LoadingScreen />}
       <MainPanel modpack={selectedModpack} fetchData={fetchData} handleSetNoChange={handleSetNoChange} noChange={noChange} style={mpAnimation} />
-
       <SidePanel pos={sidePanelPos} changeSettingPos={changeSettingPos} handleSelectModpack={handleSelectModpack} modpacks={allModpacks} />
-
       <Settings pos={settingPos} changeSettingPos={changeSettingPos} />
-
-      
-
-    </div>    
+    </div>
   )
 }
 
-export default App
+export default App;

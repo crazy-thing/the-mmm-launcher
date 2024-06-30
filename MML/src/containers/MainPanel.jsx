@@ -210,6 +210,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
       const slideStyle = {
         transform: `translateX(${slideDirection})`,
         transition: `${slideAni}`,
+        willChange: "transform"
       };
       switch (selectedItem) {
         /* 
@@ -240,7 +241,9 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
       height: "9vh",
       borderRadius: "5px",
       border: `2px solid ${update ? "#1383df" : "#49a749" }`, 
-      background: `${update ? "#1383df" : `linear-gradient(90deg, #49a749 ${progress}%, transparent ${progress}%)`}`
+      background: `${update ? "#1383df" : `linear-gradient(90deg, #49a749 ${progress}%, transparent ${progress}%)`}`,
+      willChange: "background"
+
     };
 
     const installedBtnStyle = {
@@ -248,7 +251,9 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
       height: "9vh",
       borderRadius: "5px 0px 0px 5px",
       border: `2px solid ${update ? "#1383df" : "#49a749" }`, 
-      background: `${update ? "#1383df" : `linear-gradient(90deg, #49a749 ${progress}%, transparent ${progress}%)`}`
+      background: `${update ? "#1383df" : `linear-gradient(90deg, #49a749 ${progress}%, transparent ${progress}%)`}`,
+      willChange: "background"
+
     };
 
 

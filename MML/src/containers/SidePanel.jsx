@@ -65,7 +65,7 @@ const SidePanel = ({ pos, changeSettingPos, handleSelectModpack, modpacks }) => 
             onClick={profile ? () => handleSignOut(profile.GamerTag) : () => handleSignIn()}
             text={profile ? "Sign Out" : "Sign In"}
             style={{ width: "7vw", height: "2.1vw", background: "var(--accent-color)"}}
-            textStyle={{ fontSize: "15px", color: "#000", fontFamily: "var(--font-family-secondary"}}/>
+            textStyle={{ fontSize: "1.85vh", color: "#000", fontFamily: "var(--font-family-secondary"}}/>
           </>
         ) : (
           <Button
