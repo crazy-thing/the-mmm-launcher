@@ -13,7 +13,8 @@ const Screenshots = ({ screenshots, onClick }) => {
             rows.push(
                 <div className='screenshots-row' key={`row-${i}`}>
                     {rowScreenshots.map((screenshot, index) => (
-                        <div className="screenshot-container" key={`screenshot-container-${i}-${index}`}>
+                        <div className="screenshot-container" key={`screenshot-container-${i}-${index}`} onClick={() => onClick(i + index)}
+>
                             <img
                                 key={`screenshot-${i}-${index}`}
                                 className='screenshots-screenshot'
@@ -23,7 +24,6 @@ const Screenshots = ({ screenshots, onClick }) => {
                             <img 
                                 src={fullscreen}
                                 className="screenshot-icon"
-                                onClick={() => onClick(i + index)}
                             />
                         </div>
                     ))}

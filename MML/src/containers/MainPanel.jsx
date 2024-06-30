@@ -32,6 +32,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
   const [index, setIndex] = useState(null);
 
   const [slideDirection, setSlideDirection] = useState('in');
+  const [slideAni, setSlideAni] = useState('');
 
 
   const openViewer = (index) => {
@@ -71,15 +72,29 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
   };
 
   const handleChangeItem = (item) => {
-    if (item === "screenshots") {
-      setSlideDirection("-110%");
-    } else if (item === "changelog") {
-      setSlideDirection("110%");
+    if (selectedItem === item) return;
+
+    setSlideAni('transform 0.225s ease');
+    if (selectedItem === "screenshots" && item === "changelog") {
+      setSlideDirection("-110%"); // Exit to left    
+    } else if (selectedItem === "changelog" && item === "screenshots") {
+      setSlideDirection("110%"); // Exit to right
     }
     setTimeout(() => {
-      setSlideDirection("0%");
-      setSelectedItem(item);
-    }, 150);
+      setSlideAni(null);
+      if (item === "screenshots") {
+        setSlideDirection("-110%"); // Enter from left
+      } else if (item === "changelog") {
+        setSlideDirection("110%"); // Enter from right
+      }
+      setTimeout(() => {
+        setTimeout(() => {
+          setSlideAni('transform 0.225s ease');
+          setSlideDirection("0%");
+          setSelectedItem(item);
+        }, 15);
+      }, 0);
+    }, 112);
   };
 
   const handleOverflowCheck = () => {
@@ -96,7 +111,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
                 console.log(nameRect.width);
             }
         } else {
-            setTimeout(checkElements, 10); 
+            setTimeout(checkElements, 1); 
         }
     };
 
@@ -187,14 +202,14 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
         ipcRenderer.removeAllListeners('install-complete');
         ipcRenderer.removeAllListeners('game-launched');
         ipcRenderer.removeAllListeners('update-progress');
+        ipcRenderer.removeAllListeners('uninstall-complete');
       };
     }, [modpack]);
 
     const renderInfo = () => {
       const slideStyle = {
         transform: `translateX(${slideDirection})`,
-        transition: 'transform 0.5s ease',
-        width: "100%",
+        transition: `${slideAni}`,
       };
       switch (selectedItem) {
         /* 
@@ -205,7 +220,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
         */
         case "screenshots":
           return (
-            <div style={slideStyle}>
+            <div style={slideStyle} className='main-panel-item-container'>
               <Screenshots screenshots={modpack.screenshots} onClick={openViewer} />
             </div>
           );

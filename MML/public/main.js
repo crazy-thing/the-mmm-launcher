@@ -14,12 +14,18 @@ let isDev = true;
 const iconPath = path.join(__dirname, 'mml.ico');
 function createWindow() {
 
+    const initialWidth = 1600;
+    const initialHeight = 900;
+    const ratio = initialWidth / initialHeight;
+    let resizing = false;
+
     win = new BrowserWindow({
-        width: 1600,
-        height: 900,
-        minWidth: 1100,
-        minHeight: 600,
+        width: initialWidth,
+        height: initialHeight,
+        minWidth: 900,
+        minHeight: 508,
         autoHideMenuBar: true,
+        resizable: true,
         icon: iconPath,
         webPreferences: {
             nodeIntegration: true,
@@ -28,6 +34,13 @@ function createWindow() {
             enablePreferredSizeMode: true,
             zoomFactor: 1.0
         },
+    });
+
+
+    win.setAspectRatio(ratio);
+    
+    win.on('resize', () => {
+        win.center();
     });
 
     backendProc = isDev ? spawn('dotnet', ['run', '--project', path.join(process.cwd(), '../MMLCLI/MMLCLI.csproj')]) :  spawn(path.join(__dirname, "backend", "MMLCLI.exe")); // MMLCLI for linux and macos

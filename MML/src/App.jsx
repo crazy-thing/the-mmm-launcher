@@ -57,6 +57,7 @@ function App() {
 
   const handleSelectModpack = (modpack) => {
     setAnimation(null);
+    setMpAnimation(null);
     if (noChange) {
       ipcRenderer.send('show-error', "Please wait until install has finished");
     } else if (selectedModpack.id === modpack.id) {
@@ -64,10 +65,13 @@ function App() {
     } else {
         setNextModpack(modpack);
         setAnimation("fade .6s ease-in-out infinite alternate");
-        setMpAnimation({opacity: "0"});
+        // setMpAnimation({animation: "roll-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"});
+        setMpAnimation({animation: "slide-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"});
         setTimeout(() => {
           setAnimation(null);
-          setMpAnimation({opacity: "1"});
+          // setMpAnimation({animation: "roll-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"});
+          setMpAnimation({animation: "slide-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"}); 
+
           setSelectedModpack(modpack);
           localStorage.setItem('lastSelectedModpack', JSON.stringify(modpack.id));
           console.log("Selected Modpack: ", modpack);
@@ -135,6 +139,7 @@ function App() {
 
       <Settings pos={settingPos} changeSettingPos={changeSettingPos} />
 
+      
 
     </div>    
   )
