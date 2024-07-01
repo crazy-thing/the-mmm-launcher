@@ -121,7 +121,7 @@ const Settings = ({ pos, changeSettingPos }) => {
                 </div>
 
                 </div>
-                    <p className='settings-mml-info-text'> Minecraft Migos Launcher v1.1.3 </p>
+                    <p className='settings-mml-info-text'> Minecraft Migos Launcher v1.1.5 </p>
             </div>
          </div>
     );

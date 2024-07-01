@@ -31,14 +31,19 @@ namespace MMLCLI.Core
                 launcher = new CMLauncher(path);
                 launcher.FileChanged += Launcher_FileChanged;
 
-                string baseRoot = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? minecraftRootMac : minecraftRoot;
+
+                path.BasePath = Path.Combine(minecraftRoot, "Instances", modpackId ?? string.Empty);
+
+                Console.WriteLine($"Path is {path.Runtime}");
+
+                // For custom install
+               /* string baseRoot = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? minecraftRootMac : minecraftRoot;
 
                 if (!Directory.Exists(baseRoot))
                 {
                     Directory.CreateDirectory(baseRoot);
                 }
 
-                path.BasePath = Path.Combine(baseRoot, "Instances", modpackId ?? string.Empty);
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -57,7 +62,7 @@ namespace MMLCLI.Core
                 path.Resource = Path.Combine(baseRoot, "resources");
                 path.Versions = Path.Combine(baseRoot, "versions");
                 path.Assets = Path.Combine(baseRoot, "assets");
-
+                */
                 return launcher;
             }
             catch (Exception ex)

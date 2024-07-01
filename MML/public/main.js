@@ -40,7 +40,7 @@ function createWindow() {
     win.setAspectRatio(ratio);
     
     win.on('resize', () => {
-        win.center();
+        //win.center();
     });
 
     backendProc = isDev ? spawn('dotnet', ['run', '--project', path.join(process.cwd(), '../MMLCLI/MMLCLI.csproj')]) :  spawn(path.join(__dirname, "backend", "MMLCLI.exe")); // MMLCLI for linux and macos

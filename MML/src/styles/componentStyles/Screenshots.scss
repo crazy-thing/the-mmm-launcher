@@ -23,11 +23,12 @@
     min-height: 25vh;
     max-width: 44vh;
     max-height: 25vh;
+    cursor: pointer;
+
 }
 
 .screenshot-container {
     position: relative;
-    cursor: pointer;
 }
 
 .screenshot-container.placeholder {
@@ -37,6 +38,7 @@
     min-height: 25vh;
     max-width: 44vh;
     max-height: 25vh;
+    cursor: auto!important;
 }
 
 .screenshot-icon {

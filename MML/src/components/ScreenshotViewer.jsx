@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/componentStyles/ScreenshotViewer.scss';
 import { close, left, right } from '../assets/exports';
 const ScreenshotViewer = ({ modpack, index, onClose, onNext, onPrev }) => {
@@ -6,6 +6,23 @@ const ScreenshotViewer = ({ modpack, index, onClose, onNext, onPrev }) => {
   const handleImgClick = (e) => {
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "ArrowLeft" | e.key === "a") {
+        onPrev(e);
+      } else if (e.key === "ArrowRight" | e.key === "d") {
+        onNext(e);
+      } else if (e.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => window.removeEventListener('keydown', handleKeyPress);
+
+  }, [onPrev, onNext, onClose]);
 
   
   return (

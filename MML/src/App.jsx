@@ -66,7 +66,7 @@ function App() {
         setNextModpack(modpack);
         setAnimation("fade .6s ease-in-out infinite alternate");
         setMpAnimation({
-          animation: "slide-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both"
+          animation:  modpack && modpack.index % 2 ? `slide-out-blurred-right 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both` : `slide-out-blurred-left 0.3s cubic-bezier(0.755, 0.050, 0.855, 0.060) both`
         });
 
         if (animationRef.current) {
@@ -77,7 +77,7 @@ function App() {
           animationRef.current = requestAnimationFrame(() => {
             setAnimation(null);
             setMpAnimation({
-              animation: "slide-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both"
+              animation: modpack && modpack.index % 2  ? `slide-in-blurred-left 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both` : `slide-in-blurred-right 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both`
             });
 
             setSelectedModpack(modpack);

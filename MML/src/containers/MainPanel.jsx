@@ -89,12 +89,12 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
       }
       setTimeout(() => {
         setTimeout(() => {
-          setSlideAni('transform 0.225s ease');
+          setSlideAni('transform 0.320s ease');
           setSlideDirection("0%");
           setSelectedItem(item);
         }, 15);
       }, 0);
-    }, 112);
+    }, 160);
   };
 
   const handleOverflowCheck = () => {
@@ -123,7 +123,7 @@ const MainPanel = ({ modpack, fetchData, noChange, handleSetNoChange, style  }) 
     setVerInstalling(modpack.mainVersion);
     handleSetNoChange(true);
     ipcRenderer.send('download-modpack', JSON.stringify(modpack));
-    setSelectedItem("changelog");
+    handleChangeItem("changelog");
   };
 
   const handleDeleteModpack = () => {
